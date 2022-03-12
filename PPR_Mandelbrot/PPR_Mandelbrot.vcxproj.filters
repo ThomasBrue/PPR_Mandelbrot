@@ -21,6 +21,9 @@
     <ClCompile Include="tga.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sandboxTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tga.h">
