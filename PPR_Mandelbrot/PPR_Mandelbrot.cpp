@@ -24,7 +24,7 @@ using namespace tga;
 const int BYTES_PER_PIXEL = 3;
 const int GL_RGB = 0;
 const int BITS_PER_PIXEL = 24;
-const unsigned char MAX_COLOR_CODE = 255;
+const unsigned int MAX_COLOR_CODE = 255 * 3;
 
 tuple<float, float> normalizeToViewRectangle(
 	int pX, int pY, float minX, float minY, float maxX, float maxY, 
@@ -35,7 +35,7 @@ tuple<float, float> normalizeToViewRectangle(
 	return { cX, cY };
 }
 
-unsigned char calcPix(
+unsigned int calcPix(
 	int pX, int pY, float minX, float minY, float maxX, float maxY,
 	unsigned int maxIterations, unsigned int w, unsigned int h)
 {
@@ -52,7 +52,7 @@ unsigned char calcPix(
 		float y = (zY * zX + zX * zY) + cY;
 		if ((x * x + y * y) > 4)
 		{
-			return (unsigned char)(n * MAX_COLOR_CODE / maxIterations);
+			return n * MAX_COLOR_CODE / maxIterations;
 		}
 		zX = x;
 		zY = y;
@@ -76,11 +76,11 @@ void parallelSolution(
 		{
 			for (int x = 0; x < w; x++)
 			{
-				unsigned char color = calcPix(x, y, minX, minY, maxX, maxY, maxIterations, w, h);
+				unsigned int color = calcPix(x, y, minX, minY, maxX, maxY, maxIterations, w, h);
 				unsigned int p = (y * w + x) * BYTES_PER_PIXEL;
-				v[p] = color;
-				v[p + 1] = color;
-				v[p + 2] = color;
+				v[p] = (unsigned char) color % 255;
+				v[p + 1] = (unsigned char) color % (255 * 255);
+				v[p + 2] = (unsigned char) color % (255 * 255 * 255);
 			}
 		}
 	}
@@ -105,11 +105,11 @@ void serialSolution(
 	{
 		for (int x = 0; x < w; x++)
 		{
-			unsigned char color = calcPix(x, y, minX, minY, maxX, maxY, maxIterations, w, h);
+			unsigned int color = calcPix(x, y, minX, minY, maxX, maxY, maxIterations, w, h);
 			unsigned int p = (y * w + x) * BYTES_PER_PIXEL;
-			v[p] = color;
-			v[p + 1] = color;
-			v[p + 2] = color;
+			v[p] = (unsigned char) color % 255;
+			v[p + 1] = (unsigned char) color % (255 * 255);
+			v[p + 2] = (unsigned char) color % (255 * 255 * 255);
 		}
 	}
 
