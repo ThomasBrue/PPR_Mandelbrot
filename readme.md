@@ -14,15 +14,21 @@ For the parallel implementation the generall general strucutre with nested for l
 
 ![Mandelbrot](./Screenshots/Mandelbrot.png)
 
+<div style="page-break-after: always"></div>
+
 ## Speedup Analysis
 
 The following benchmark was performed with an image resolution of 1024 x 1024 pixel on a machine with 12 logical CPU cores:
 <br/><br/>
 ![Benchmarks](./Screenshots/ConsoleOutput.png)
 <br/><br/>
+
 ![Total Calculation Time](./Screenshots/TotalCalcTime.png)
-<br/><br/>
+
+<div style="page-break-after: always"></div>
 This leads to the following speedup quotient:
+
 ![Speedup Quotient](./Screenshots/SpeedupQuotient.png)
+
 <br/><br/>
 It can be seen, that the speedup quotient increased very linear until about 6 threads. From 6 to 8 threads a very slight decrease in the slope can be observed. At 10 threads another decrease in the slope can be seen. When using 12 threads, the slope (surprisingly) increased again. In summary, the speedup quotient is quite quite linear until the number of threads used reaches nearly the maximum number of available (logical) CPU cores.
